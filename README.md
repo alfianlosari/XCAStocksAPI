@@ -7,6 +7,7 @@ This library provides very simple and Swiftly way to interact with Yahoo Finance
 - Search Ticker using query.
 - Fetch quotes using ticker symbols.
 - Swift Async Await Interface.
+- Fetch Raw JSON data.
 
 ### Swift Package Manager
 
