@@ -26,10 +26,8 @@ struct XCAStocksExec {
                 .fetchQuotes(symbols: "AAPL,TSLA,GOOG,MSFT")
             print(quotes)
             
-            
-        } catch let error as NSError{
+        } catch {
             print(error.localizedDescription)
         }
     }
-    
 }
