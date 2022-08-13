@@ -43,5 +43,5 @@ let tickers = try await api.searchTicker(query: "TESLA")
 let quotes = try await api.fetchQuotes(symbols: "AAPL,TSLA,GOOG,MSFT")
 ```
 
-### Powered by Yahoo API
-Powered by Yahoo https://www.yahoo.com/?ilc=401
+### Powered by Yahoo Finance API
+https://www.yahoo.com/?ilc=401
