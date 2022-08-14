@@ -5,8 +5,8 @@ import Foundation
 
 public struct ChartResponse: Decodable {
     
-    let data: [ChartData]?
-    let error: ErrorResponse?
+    public let data: [ChartData]?
+    public let error: ErrorResponse?
     
     enum RootKeys: String, CodingKey {
         case chart

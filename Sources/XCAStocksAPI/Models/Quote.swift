@@ -5,8 +5,8 @@ import Foundation
 
 public struct QuoteResponse: Decodable {
     
-    let data: [Quote]?
-    let error: ErrorResponse?
+    public let data: [Quote]?
+    public let error: ErrorResponse?
     
     enum RootKeys: String, CodingKey {
         case quoteResponse

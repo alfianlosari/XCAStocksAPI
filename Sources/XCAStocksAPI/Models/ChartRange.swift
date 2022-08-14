@@ -17,7 +17,7 @@ public enum ChartRange: String {
     case tenYear = "10y"
     case max = "max"
     
-    var interval: String {
+    public var interval: String {
         switch self {
         case .oneDay: return "1m"
         case .oneWeek: return "5m"
