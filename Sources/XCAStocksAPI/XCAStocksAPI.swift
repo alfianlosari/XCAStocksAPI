@@ -20,7 +20,7 @@ public struct XCAStocksAPI: IStocksAPI {
         return decoder
     }()
     
-    public static let shared = XCAStocksAPI()
+    public init() {}
     
     private let baseURL = "https://query1.finance.yahoo.com"
     public func fetchChartData(tickerSymbol: String, range: ChartRange) async throws -> ChartData? {

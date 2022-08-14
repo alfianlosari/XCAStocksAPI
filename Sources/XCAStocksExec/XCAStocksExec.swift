@@ -6,7 +6,7 @@ import XCAStocksAPI
 @main
 struct XCAStocksExec {
     
-    private static let api = XCAStocksAPI.shared
+    private static let api = XCAStocksAPI()
     static func main() async {
         do {
             // Fetch AAPL stocks last 1 day
