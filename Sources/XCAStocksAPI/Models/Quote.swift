@@ -29,7 +29,9 @@ public struct QuoteResponse: Decodable {
     }
 }
 
-public struct Quote: Decodable {
+public struct Quote: Decodable, Identifiable, Hashable {
+    
+    public var id = UUID()
     
     public let regularMarketPrice: Double?
     public let regularMarketChange: Double?

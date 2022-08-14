@@ -26,7 +26,9 @@ public struct SearchTickerResponse: Decodable {
     }
 }
 
-public struct Ticker: Decodable {
+public struct Ticker: Decodable, Identifiable, Hashable {
+    public var id = UUID()
+    
     public let symbol: String
     public let quoteType: String?
     public let shortname: String?
@@ -45,3 +47,4 @@ public struct Ticker: Decodable {
         self.exchDisp = exchDisp
     }
 }
+
