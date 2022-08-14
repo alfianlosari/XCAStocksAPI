@@ -35,70 +35,6 @@ public struct ChartData: Decodable {
     public let metadata: Metadata
     public let indicators: [Indicator]    
     
-    public struct Metadata: Decodable {
-        
-        public let currency: String
-        public let symbol: String
-        public let regularMarketPrice: Double?
-        public let previousClose: Double?
-        public let gmtOffset: Int
-        
-        public let regularTradingPeriodStartDate: Date
-        public let regularTradingPeriodEndDate: Date
-        
-        enum RootKeys: String, CodingKey {
-            case currency
-            case symbol
-            case regularMarketPrice
-            case currentTradingPeriod
-            case previousClose
-            case gmtOffset = "gmtoffset"
-        }
-        
-        enum RootTradingPeriodKeys: String, CodingKey {
-            case pre
-            case regular
-            case post
-        }
-        
-        enum TradingPeriodKeys: String, CodingKey {
-            case start
-            case end
-        }
-        
-        enum CodingKeys: CodingKey {
-            case currency
-            case symbol
-            case regularMarketPrice
-            case previousClose
-            case gmtoffset
-            case regularTradingPeriodStartDate
-            case regularTradingPeriodEndDate
-        }
-        
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: RootKeys.self)
-            self.currency = try container.decodeIfPresent(String.self, forKey: .currency) ?? ""
-            self.symbol = try container.decodeIfPresent(String.self, forKey: .symbol) ?? ""
-            self.regularMarketPrice = try container.decodeIfPresent(Double.self, forKey: .regularMarketPrice)
-            self.previousClose = try container.decodeIfPresent(Double.self, forKey: .previousClose)
-            self.gmtOffset = try container.decodeIfPresent(Int.self, forKey: .gmtOffset) ?? 0
-            
-            let rootTradingPeriodContainer = try? container.nestedContainer(keyedBy: RootTradingPeriodKeys.self, forKey: .currentTradingPeriod)
-            let regularTradingPeriodContainer = try? rootTradingPeriodContainer?.nestedContainer(keyedBy: TradingPeriodKeys.self, forKey: .regular)
-            self.regularTradingPeriodStartDate = try regularTradingPeriodContainer?.decode(Date.self, forKey: .start) ?? Date()
-            self.regularTradingPeriodEndDate = try regularTradingPeriodContainer?.decode(Date.self, forKey: .end) ?? Date()
-        }
-    }
-    
-    public struct Indicator: Decodable {
-        public let timestamp: Date
-        public let open: Double
-        public let high: Double
-        public let low: Double
-        public let close: Double
-    }
-    
     enum RootKeys: String, CodingKey {
         case meta
         case timestamp
@@ -142,5 +78,81 @@ public struct ChartData: Decodable {
         } else {
             self.indicators = []
         }
+    }
+    
+    public init(metadata: Metadata, indicators: [Indicator]) {
+        self.metadata = metadata
+        self.indicators = indicators
+    }
+}
+
+public struct Metadata: Decodable {
+    
+    public let currency: String
+    public let symbol: String
+    public let regularMarketPrice: Double?
+    public let previousClose: Double?
+    public let gmtOffset: Int
+    public let regularTradingPeriodStartDate: Date
+    public let regularTradingPeriodEndDate: Date
+    
+    enum RootKeys: String, CodingKey {
+        case currency
+        case symbol
+        case regularMarketPrice
+        case currentTradingPeriod
+        case previousClose
+        case gmtOffset = "gmtoffset"
+    }
+    
+    enum RootTradingPeriodKeys: String, CodingKey {
+        case pre
+        case regular
+        case post
+    }
+    
+    enum TradingPeriodKeys: String, CodingKey {
+        case start
+        case end
+    }
+    
+    enum CodingKeys: CodingKey {
+        case currency
+        case symbol
+        case regularMarketPrice
+        case previousClose
+        case gmtoffset
+        case regularTradingPeriodStartDate
+        case regularTradingPeriodEndDate
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: RootKeys.self)
+        self.currency = try container.decodeIfPresent(String.self, forKey: .currency) ?? ""
+        self.symbol = try container.decodeIfPresent(String.self, forKey: .symbol) ?? ""
+        self.regularMarketPrice = try container.decodeIfPresent(Double.self, forKey: .regularMarketPrice)
+        self.previousClose = try container.decodeIfPresent(Double.self, forKey: .previousClose)
+        self.gmtOffset = try container.decodeIfPresent(Int.self, forKey: .gmtOffset) ?? 0
+        
+        let rootTradingPeriodContainer = try? container.nestedContainer(keyedBy: RootTradingPeriodKeys.self, forKey: .currentTradingPeriod)
+        let regularTradingPeriodContainer = try? rootTradingPeriodContainer?.nestedContainer(keyedBy: TradingPeriodKeys.self, forKey: .regular)
+        self.regularTradingPeriodStartDate = try regularTradingPeriodContainer?.decode(Date.self, forKey: .start) ?? Date()
+        self.regularTradingPeriodEndDate = try regularTradingPeriodContainer?.decode(Date.self, forKey: .end) ?? Date()
+    }
+}
+
+public struct Indicator: Decodable {
+    public let timestamp: Date
+    public let open: Double
+    public let high: Double
+    public let low: Double
+    public let close: Double
+    
+    public init(timestamp: Date, open: Double, high: Double, low: Double, close: Double) {
+        self.timestamp = timestamp
+        self.open = open
+        self.high = high
+        self.low = low
+        self.close = close
     }
 }

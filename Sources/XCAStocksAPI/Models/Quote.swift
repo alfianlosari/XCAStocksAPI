@@ -52,4 +52,22 @@ public struct Quote: Decodable {
     public let trailingAnnualDividendYield: Double?
     public let epsTrailingTwelveMonths: Double?
     
+    public init(regularMarketPrice: Double?, regularMarketChange: Double?, postMarketPrice: Double?, postMarketChange: Double?, regularMarketOpen: Double?, regularMarketDayHigh: Double?, regularMarketDayLow: Double?, regularMarketVolume: Double?, trailingPE: Double?, marketCap: Double?, fiftyTwoWeekLow: Double?, fiftyTwoWeekHigh: Double?, averageDailyVolume3Month: Double?, trailingAnnualDividendYield: Double?, epsTrailingTwelveMonths: Double?) {
+        self.regularMarketPrice = regularMarketPrice
+        self.regularMarketChange = regularMarketChange
+        self.postMarketPrice = postMarketPrice
+        self.postMarketChange = postMarketChange
+        self.regularMarketOpen = regularMarketOpen
+        self.regularMarketDayHigh = regularMarketDayHigh
+        self.regularMarketDayLow = regularMarketDayLow
+        self.regularMarketVolume = regularMarketVolume
+        self.trailingPE = trailingPE
+        self.marketCap = marketCap
+        self.fiftyTwoWeekLow = fiftyTwoWeekLow
+        self.fiftyTwoWeekHigh = fiftyTwoWeekHigh
+        self.averageDailyVolume3Month = averageDailyVolume3Month
+        self.trailingAnnualDividendYield = trailingAnnualDividendYield
+        self.epsTrailingTwelveMonths = epsTrailingTwelveMonths
+    }
+    
 }

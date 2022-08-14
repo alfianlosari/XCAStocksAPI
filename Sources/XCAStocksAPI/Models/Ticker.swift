@@ -34,4 +34,14 @@ public struct Ticker: Decodable {
     public let sector: String?
     public let industry: String?
     public let exchDisp: String?
+    
+    public init(symbol: String, quoteType: String?, shortname: String?, longname: String?, sector: String?, industry: String?, exchDisp: String?) {
+        self.symbol = symbol
+        self.quoteType = quoteType
+        self.shortname = shortname
+        self.longname = longname
+        self.sector = sector
+        self.industry = industry
+        self.exchDisp = exchDisp
+    }
 }
