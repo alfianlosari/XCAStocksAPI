@@ -1,7 +1,7 @@
 # XCAStocksAPI
 ![Alt text](./promo.jpg "XCA Stocks API")
 
-This library provides very simple and Swiftly way to interact with Yahoo Finance REST API.`
+This library provides very simple and Swiftly way to interact with Yahoo Finance REST API.
 
 ## Features
 - Fetch Chart data for 1d, 1w, 1mo, 3mo, 6mo, 1y, 2y, 5y, YTD, max.
@@ -25,7 +25,7 @@ First of all, you need to import and initalize the `XCAStocksAPI`.
 ```swift
 import XCAStocksAPI
 
-let api = XCAStocksAPI.shared
+let api = XCAStocksAPI()
 ```
 
 ### Fetch AAPL stocks last 1 day
