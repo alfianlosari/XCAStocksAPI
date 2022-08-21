@@ -33,8 +33,13 @@ public struct Quote: Decodable, Identifiable, Hashable {
     
     public let id = UUID()
     
+    public let currency: String?
+    public let marketState: String?
     public let regularMarketPrice: Double?
     public let regularMarketChange: Double?
+    public let regularMarketChangePercent: Double?
+    public let regularMarketChangePreviousClose: Double?
+    public let regularMarketTime: Date?
     
     public let postMarketPrice: Double?
     public let postMarketChange: Double?
@@ -54,9 +59,14 @@ public struct Quote: Decodable, Identifiable, Hashable {
     public let trailingAnnualDividendYield: Double?
     public let epsTrailingTwelveMonths: Double?
     
-    public init(regularMarketPrice: Double?, regularMarketChange: Double?, postMarketPrice: Double?, postMarketChange: Double?, regularMarketOpen: Double?, regularMarketDayHigh: Double?, regularMarketDayLow: Double?, regularMarketVolume: Double?, trailingPE: Double?, marketCap: Double?, fiftyTwoWeekLow: Double?, fiftyTwoWeekHigh: Double?, averageDailyVolume3Month: Double?, trailingAnnualDividendYield: Double?, epsTrailingTwelveMonths: Double?) {
+    public init(currency: String?, marketState: String?, regularMarketPrice: Double?, regularMarketChange: Double?, regularMarketChangePercent: Double?, regularMarketChangePreviousClose: Double?, regularMarketTime: Date?, postMarketPrice: Double?, postMarketChange: Double?, regularMarketOpen: Double?, regularMarketDayHigh: Double?, regularMarketDayLow: Double?, regularMarketVolume: Double?, trailingPE: Double?, marketCap: Double?, fiftyTwoWeekLow: Double?, fiftyTwoWeekHigh: Double?, averageDailyVolume3Month: Double?, trailingAnnualDividendYield: Double?, epsTrailingTwelveMonths: Double?) {
+        self.currency = currency
+        self.marketState = marketState
         self.regularMarketPrice = regularMarketPrice
         self.regularMarketChange = regularMarketChange
+        self.regularMarketChangePercent = regularMarketChangePercent
+        self.regularMarketChangePreviousClose = regularMarketChangePreviousClose
+        self.regularMarketTime = regularMarketTime
         self.postMarketPrice = postMarketPrice
         self.postMarketChange = postMarketChange
         self.regularMarketOpen = regularMarketOpen
