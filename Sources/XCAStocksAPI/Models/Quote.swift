@@ -35,6 +35,11 @@ public struct Quote: Decodable, Identifiable, Hashable {
     
     public let currency: String?
     public let marketState: String?
+    
+    public let fullExchangeName: String?
+    public let displayName: String?
+    public let symbol: String?
+    
     public let regularMarketPrice: Double?
     public let regularMarketChange: Double?
     public let regularMarketChangePercent: Double?
@@ -59,9 +64,12 @@ public struct Quote: Decodable, Identifiable, Hashable {
     public let trailingAnnualDividendYield: Double?
     public let epsTrailingTwelveMonths: Double?
     
-    public init(currency: String?, marketState: String?, regularMarketPrice: Double?, regularMarketChange: Double?, regularMarketChangePercent: Double?, regularMarketChangePreviousClose: Double?, regularMarketTime: Date?, postMarketPrice: Double?, postMarketChange: Double?, regularMarketOpen: Double?, regularMarketDayHigh: Double?, regularMarketDayLow: Double?, regularMarketVolume: Double?, trailingPE: Double?, marketCap: Double?, fiftyTwoWeekLow: Double?, fiftyTwoWeekHigh: Double?, averageDailyVolume3Month: Double?, trailingAnnualDividendYield: Double?, epsTrailingTwelveMonths: Double?) {
+    public init(currency: String?, marketState: String?, fullExchangeName: String?, displayName: String?, symbol: String?, regularMarketPrice: Double?, regularMarketChange: Double?, regularMarketChangePercent: Double?, regularMarketChangePreviousClose: Double?, regularMarketTime: Date?, postMarketPrice: Double?, postMarketChange: Double?, regularMarketOpen: Double?, regularMarketDayHigh: Double?, regularMarketDayLow: Double?, regularMarketVolume: Double?, trailingPE: Double?, marketCap: Double?, fiftyTwoWeekLow: Double?, fiftyTwoWeekHigh: Double?, averageDailyVolume3Month: Double?, trailingAnnualDividendYield: Double?, epsTrailingTwelveMonths: Double?) {
         self.currency = currency
         self.marketState = marketState
+        self.fullExchangeName = fullExchangeName
+        self.displayName = displayName
+        self.symbol = symbol
         self.regularMarketPrice = regularMarketPrice
         self.regularMarketChange = regularMarketChange
         self.regularMarketChangePercent = regularMarketChangePercent
