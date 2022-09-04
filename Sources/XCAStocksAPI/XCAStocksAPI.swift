@@ -6,8 +6,8 @@ import Foundation
 public protocol IStocksAPI {
     func fetchChartData(tickerSymbol: String, range: ChartRange) async throws -> ChartData?
     func fetchChartRawData(symbol: String, range: ChartRange) async throws -> (Data, URLResponse)
-    func searchTicker(query: String, isEquityTypeOnly: Bool) async throws -> [Ticker]
-    func searchTickerRawData(query: String, isEquityTypeOnly: Bool) async throws -> (Data, URLResponse)
+    func searchTickers(query: String, isEquityTypeOnly: Bool) async throws -> [Ticker]
+    func searchTickersRawData(query: String, isEquityTypeOnly: Bool) async throws -> (Data, URLResponse)
     func fetchQuotes(symbols: String) async throws -> [Quote]
     func fetchQuotesRawData(symbols: String) async throws -> (Data, URLResponse)
 }
@@ -25,9 +25,9 @@ public struct XCAStocksAPI: IStocksAPI {
     private let baseURL = "https://query1.finance.yahoo.com"
     public func fetchChartData(tickerSymbol: String, range: ChartRange) async throws -> ChartData? {
         guard let url = urlForChartData(symbol: tickerSymbol, range: range) else { throw APIServiceError.invalidURL }
-        let resp: ChartResponse = try await fetch(url: url)
+        let (resp, statusCode): (ChartResponse, Int) = try await fetch(url: url)
         if let error = resp.error {
-            throw APIServiceError.httpStatusCodeFailed(statusCode: 400, error: error)
+            throw APIServiceError.httpStatusCodeFailed(statusCode: statusCode, error: error)
         }
         return resp.data?.first
     }
@@ -51,11 +51,11 @@ public struct XCAStocksAPI: IStocksAPI {
         return urlComp.url
     }
     
-    public func searchTicker(query: String, isEquityTypeOnly: Bool = true) async throws -> [Ticker] {
-        guard let url = urlForSearchTicker(query: query) else { throw APIServiceError.invalidURL }
-        let resp: SearchTickerResponse = try await fetch(url: url)
+    public func searchTickers(query: String, isEquityTypeOnly: Bool = true) async throws -> [Ticker] {
+        guard let url = urlForSearchTickers(query: query) else { throw APIServiceError.invalidURL }
+        let (resp, statusCode): (SearchTickerResponse, Int) = try await fetch(url: url)
         if let error = resp.error {
-            throw APIServiceError.httpStatusCodeFailed(statusCode: 400, error: error)
+            throw APIServiceError.httpStatusCodeFailed(statusCode: statusCode, error: error)
         }
         let data = resp.data ?? []
         if isEquityTypeOnly {
@@ -65,12 +65,12 @@ public struct XCAStocksAPI: IStocksAPI {
         }
     }
     
-    public func searchTickerRawData(query: String, isEquityTypeOnly: Bool) async throws -> (Data, URLResponse) {
-        guard let url = urlForSearchTicker(query: query) else { throw APIServiceError.invalidURL }
+    public func searchTickersRawData(query: String, isEquityTypeOnly: Bool) async throws -> (Data, URLResponse) {
+        guard let url = urlForSearchTickers(query: query) else { throw APIServiceError.invalidURL }
         return try await session.data(from: url)
     }
     
-    private func urlForSearchTicker(query: String) -> URL? {
+    private func urlForSearchTickers(query: String) -> URL? {
         guard var urlComp = URLComponents(string: "\(baseURL)/v1/finance/search") else {
             return nil
         }
@@ -85,9 +85,9 @@ public struct XCAStocksAPI: IStocksAPI {
     
     public func fetchQuotes(symbols: String) async throws -> [Quote] {
         guard let url = urlForFetchQuotes(symbols: symbols) else { throw APIServiceError.invalidURL }
-        let resp: QuoteResponse = try await fetch(url: url)
+        let (resp, statusCode): (QuoteResponse, Int) = try await fetch(url: url)
         if let error = resp.error {
-            throw APIServiceError.httpStatusCodeFailed(statusCode: 400, error: error)
+            throw APIServiceError.httpStatusCodeFailed(statusCode: statusCode, error: error)
         }
         return resp.data ?? []
     }
@@ -105,13 +105,13 @@ public struct XCAStocksAPI: IStocksAPI {
         return urlComp.url
     }
     
-    private func fetch<D: Decodable>(url: URL) async throws -> D {
+    private func fetch<D: Decodable>(url: URL) async throws -> (D, Int) {
         let (data, response) = try await session.data(from: url)
-        try validateHTTPResponse(data: data, response: response)
-        return try jsonDecoder.decode(D.self, from: data)
+        let statusCode = try validateHTTPResponse(response: response)
+        return (try jsonDecoder.decode(D.self, from: data), statusCode)
     }
     
-    private func validateHTTPResponse(data: Data, response: URLResponse) throws {
+    private func validateHTTPResponse(response: URLResponse) throws -> Int {
         guard let httpResponse = response as? HTTPURLResponse else {
             throw APIServiceError.invalidResponseType
         }
@@ -121,5 +121,7 @@ public struct XCAStocksAPI: IStocksAPI {
         else {
             throw APIServiceError.httpStatusCodeFailed(statusCode: httpResponse.statusCode, error: nil)
         }
+        
+        return httpResponse.statusCode
     }
 }

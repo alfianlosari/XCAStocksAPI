@@ -8,19 +8,19 @@ public struct SearchTickerResponse: Decodable {
     public let error: ErrorResponse?
     public let data: [Ticker]?
     
-    enum RootKeys: String, CodingKey {
+    enum CodingKeys: CodingKey {
         case count
         case quotes
         case finance
     }
     
-    enum FinanceKeys: String, CodingKey {
+    enum FinanceKeys: CodingKey {
         case error
     }
     
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: RootKeys.self)
-        data = try container.decodeIfPresent([Ticker].self, forKey: .quotes)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        data = try? container.decodeIfPresent([Ticker].self, forKey: .quotes)
         error = try? container.nestedContainer(keyedBy: FinanceKeys.self, forKey: .finance)
             .decodeIfPresent(ErrorResponse.self, forKey: .error)
     }

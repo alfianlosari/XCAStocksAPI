@@ -24,7 +24,7 @@ public enum APIServiceError: CustomNSError {
         switch self {
         case .invalidURL: return 1
         case .invalidResponseType: return 2
-        case .httpStatusCodeFailed: return 2
+        case .httpStatusCodeFailed: return 3
         }
     }
     

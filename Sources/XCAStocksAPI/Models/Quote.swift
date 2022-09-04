@@ -8,20 +8,24 @@ public struct QuoteResponse: Decodable {
     public let data: [Quote]?
     public let error: ErrorResponse?
     
-    enum RootKeys: String, CodingKey {
+    enum CodingKeys: CodingKey {
         case quoteResponse
+        case finance
     }
     
-    enum QuoteResponseKeys: String, CodingKey {
+    enum ResponseKeys: CodingKey {
         case result
         case error
     }
     
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: RootKeys.self)
-        if let quoteResponseContainer = try? container.nestedContainer(keyedBy: QuoteResponseKeys.self, forKey: .quoteResponse) {
-            self.data = try quoteResponseContainer.decodeIfPresent([Quote].self, forKey: .result)
-            self.error = try quoteResponseContainer.decodeIfPresent(ErrorResponse.self, forKey: .error)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        if let quoteResponseContainer = try? container.nestedContainer(keyedBy: ResponseKeys.self, forKey: .quoteResponse) {
+            self.data = try? quoteResponseContainer.decodeIfPresent([Quote].self, forKey: .result)
+            self.error = try? quoteResponseContainer.decodeIfPresent(ErrorResponse.self, forKey: .error)
+        } else if let financeResponseContainer = try? container.nestedContainer(keyedBy: ResponseKeys.self, forKey: .finance) {
+            self.data = nil
+            self.error = try? financeResponseContainer.decodeIfPresent(ErrorResponse.self, forKey: .error)
         } else {
             self.data = nil
             self.error = nil
