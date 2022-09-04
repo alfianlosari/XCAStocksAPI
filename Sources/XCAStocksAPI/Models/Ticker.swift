@@ -3,7 +3,7 @@
 
 import Foundation
 
-public struct SearchTickerResponse: Decodable {
+public struct SearchTickersResponse: Decodable {
     
     public let error: ErrorResponse?
     public let data: [Ticker]?

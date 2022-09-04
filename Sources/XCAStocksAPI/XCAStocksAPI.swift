@@ -53,7 +53,7 @@ public struct XCAStocksAPI: IStocksAPI {
     
     public func searchTickers(query: String, isEquityTypeOnly: Bool = true) async throws -> [Ticker] {
         guard let url = urlForSearchTickers(query: query) else { throw APIServiceError.invalidURL }
-        let (resp, statusCode): (SearchTickerResponse, Int) = try await fetch(url: url)
+        let (resp, statusCode): (SearchTickersResponse, Int) = try await fetch(url: url)
         if let error = resp.error {
             throw APIServiceError.httpStatusCodeFailed(statusCode: statusCode, error: error)
         }
