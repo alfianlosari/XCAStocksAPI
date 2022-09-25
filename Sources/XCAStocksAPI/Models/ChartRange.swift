@@ -10,12 +10,12 @@ public enum ChartRange: String, CaseIterable {
     case oneMonth = "1mo"
     case threeMonth = "3mo"
     case sixMonth = "6mo"
-    case ytd = "ytd"
+    case ytd
     case oneYear = "1y"
     case twoYear = "2y"
     case fiveYear = "5y"
     case tenYear = "10y"
-    case max = "max"
+    case max
     
     public var interval: String {
         switch self {

@@ -37,7 +37,7 @@ public struct Ticker: Codable, Identifiable, Hashable, Equatable {
     public let industry: String?
     public let exchDisp: String?
     
-    public init(symbol: String, quoteType: String?, shortname: String?, longname: String?, sector: String?, industry: String?, exchDisp: String?) {
+    public init(symbol: String, quoteType: String? = nil, shortname: String? = nil, longname: String? = nil, sector: String? = nil, industry: String? = nil, exchDisp: String? = nil) {
         self.symbol = symbol
         self.quoteType = quoteType
         self.shortname = shortname
