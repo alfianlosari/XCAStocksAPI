@@ -3,7 +3,7 @@
 
 import Foundation
 
-public protocol IStocksAPI {
+protocol IStocksAPI {
     func fetchChartData(tickerSymbol: String, range: ChartRange) async throws -> ChartData?
     func fetchChartRawData(symbol: String, range: ChartRange) async throws -> (Data, URLResponse)
     func searchTickers(query: String, isEquityTypeOnly: Bool) async throws -> [Ticker]
