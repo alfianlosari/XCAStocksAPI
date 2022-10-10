@@ -17,7 +17,7 @@ struct XCAStocksExec {
             
             // Search Ticker using "TESLA" as Query
             let tickers = try await api
-                .searchTicker(query: "TESLA")
+                .searchTickers(query: "TESLA")
             print(tickers)
             
             // Fetch Quote Detail for multiple symbols
