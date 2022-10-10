@@ -33,9 +33,9 @@ let api = XCAStocksAPI()
 let apple1dChart = try await api.fetchChartData(tickerSymbol: "AAPL", range: .oneDay)
 ```
 
-### Search Ticker using "TESLA" as Query
+### Search Tickers using "TESLA" as Query
 ```swift
-let tickers = try await api.searchTicker(query: "TESLA")
+let tickers = try await api.searchTickers(query: "TESLA")
 ```
 
 ### Fetch Quote Detail for multiple symbols AAPL, TSLA, GOOG, MSFT
