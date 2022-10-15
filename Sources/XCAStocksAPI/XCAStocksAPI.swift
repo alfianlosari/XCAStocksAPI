@@ -1,6 +1,8 @@
 //  Created by Alfian Losari on 13/08/22.
 //
-
+#if os(Linux)
+import FoundationNetworking
+#endif
 import Foundation
 
 public protocol IStocksAPI {
