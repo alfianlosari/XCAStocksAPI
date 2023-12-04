@@ -116,6 +116,16 @@ public struct ChartMeta: Decodable {
         case start
         case end
     }
+    
+    public init(currency: String, symbol: String, regularMarketPrice: Double?, previousClose: Double?, gmtOffset: Int, regularTradingPeriodStartDate: Date, regularTradingPeriodEndDate: Date) {
+        self.currency = currency
+        self.symbol = symbol
+        self.regularMarketPrice = regularMarketPrice
+        self.previousClose = previousClose
+        self.gmtOffset = gmtOffset
+        self.regularTradingPeriodStartDate = regularTradingPeriodStartDate
+        self.regularTradingPeriodEndDate = regularTradingPeriodEndDate
+    }
  
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
